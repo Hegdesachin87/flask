@@ -2,6 +2,7 @@ from flask import Flask, render_template, url_for, request
 import database
 import bussiness_logic
 
+# constructor
 app = Flask(__name__)
 
 
