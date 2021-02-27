@@ -75,8 +75,6 @@ def select_employee():
 def update_employee():
     try:
         data = request.get_json()
-        print(data['update_content'],
-              data['update_content_data'], data['id'])
         database.update_data(data['update_content'],
                              data['update_content_data'], data['id'])
         response = {
@@ -84,6 +82,26 @@ def update_employee():
             "status": 1
         }
 
+    except:
+        response = {
+            "update": "table not updated",
+            "status": 0
+
+        }
+    return response
+
+
+@app.route('/order-by', methods=['POST'])
+def order_by():
+    try:
+        data = request.get_json()
+        # print(data['table'], data['column'], data['order'])
+        value = database.order_by(data['table'], data['column'], data['order'])
+        jon = bussiness_logic.dictionary_conversion(value)
+        response = {
+            "update": jon,
+            "status": 1
+        }
     except:
         response = {
             "update": "table not updated",

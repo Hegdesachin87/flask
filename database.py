@@ -99,15 +99,25 @@ def delete_data(delete_id):
             print("PostgreSQL connection is closed")
 
 
-# def conditional_select():
-#     try:
-#         # Connect to an existing database
-#         connection = psycopg2.connect(user="postgres",
-#                                       password="psql",
-#                                       host="127.0.0.1",
-#                                       port="5432",
-#                                       database="ems")
-#         # Create a cursor to perform database operations
-#         cursor = connection.cursor()
-#         cursor.execute()
-#         connection.commit()
+def order_by(table, column, order):
+    try:
+        # Connect to an existing database
+        connection = psycopg2.connect(user="postgres",
+                                      password="psql",
+                                      host="127.0.0.1",
+                                      port="5432",
+                                      database="ems")
+        # Create a cursor to perform database operations
+        cursor = connection.cursor()
+        x = cursor.execute(
+            "Select * FROM {} ORDER BY {} {}".format(table, column, order))
+        connection.commit()
+        record = cursor.fetchall()
+        return record
+    except:
+        throw("Error while connecting to PostgreSQL")
+    finally:
+        if (connection):
+            cursor.close()
+            connection.close()
+            print("PostgreSQL connection is closed")
